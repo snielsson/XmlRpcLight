@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1C68CB20-CAA4-4F65-BFF8-27BDDA1A900E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XmlRpcLight</RootNamespace>
+    <AssemblyName>XmlRpcLight</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\XmlRpcMemberAttribute.cs" />
+    <Compile Include="Attributes\XmlRpcMethodAttribute.cs" />
+    <Compile Include="Attributes\XmlRpcMissingMappingAttribute.cs" />
+    <Compile Include="Attributes\XmlRpcParameterAttribute.cs" />
+    <Compile Include="Attributes\XmlRpcReturnValueAttribute.cs" />
+    <Compile Include="Attributes\XmlRpcServiceAttribute.cs" />
+    <Compile Include="Attributes\XmlRpcUrlAttribute.cs" />
+    <Compile Include="DataTypes\DateTime8601.cs" />
+    <Compile Include="DataTypes\XmlRpcBoolean.cs" />
+    <Compile Include="DataTypes\XmlRpcDateTime.cs" />
+    <Compile Include="DataTypes\XmlRpcDouble.cs" />
+    <Compile Include="DataTypes\XmlRpcInt.cs" />
+    <Compile Include="DataTypes\XmlRpcStruct.cs" />
+    <Compile Include="Enums\MappingAction.cs" />
+    <Compile Include="Enums\XmlRpcNonStandard.cs" />
+    <Compile Include="Enums\XmlRpcType.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XmlRpcException.cs" />
+    <Compile Include="XmlRpcFaultException.cs" />
+    <Compile Include="XmlRpcMethodInfo.cs" />
+    <Compile Include="XmlRpcParameterInfo.cs" />
+    <Compile Include="XmlRpcRequest.cs" />
+    <Compile Include="XmlRpcResponse.cs" />
+    <Compile Include="XmlRpcSerializer.cs" />
+    <Compile Include="XmlRpcService.cs" />
+    <Compile Include="XmlRpcServiceInfo.cs" />
+    <Compile Include="XmlRpcUtil.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
