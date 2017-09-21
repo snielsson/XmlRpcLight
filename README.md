@@ -3,11 +3,11 @@ C# XmlRpc library based on a trimmed down version of Xml-Rpc by Charles Cook.
 
 XmlRpcLight has no dependencies on System.Web and is suitable for usage in ASP.NET 5 applications.
 
-##Install from Nuget.org:
+## Install from Nuget.org:
 
 Install-Package XmlRpcLight.
 
-##Usage: 
+## Usage: 
 Derive a service class from XmlRpcService and mark methods with XmlRpcMethod attributes:
 
     private class SomeXmlRpcLightService : XmlRpcService {
