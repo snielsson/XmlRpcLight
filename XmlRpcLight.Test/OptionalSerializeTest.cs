@@ -206,7 +206,7 @@ namespace XmlRpcLight.Test {
             Type parsedType, parsedArrayType;
             var obj = Utils.Parse(xdoc, typeof (Struct0), MappingAction.Error,
                 out parsedType, out parsedArrayType);
-            Assert.IsInstanceOfType(typeof (Struct0), obj);
+            Assert.IsInstanceOf<Struct0>(obj);
             var strin = (Struct0) obj;
             Assert.AreEqual(strout.xi, strin.xi);
             Assert.AreEqual(strout.xb, strin.xb);
@@ -223,11 +223,10 @@ namespace XmlRpcLight.Test {
 
         //-------------------------------------------------------------------------/
         [Test]
-        [ExpectedException(typeof (XmlRpcMappingSerializeException))]
         public void Struct1_AllMissing_ErrorDefault() {
-            var xdoc = Utils.Serialize("Struct1_AllMissing_ErrorDefault",
+            Assert.Throws< XmlRpcMappingSerializeException>(()=> Utils.Serialize("Struct1_AllMissing_ErrorDefault",
                 new Struct1(),
-                Encoding.UTF8, MappingAction.Error);
+                Encoding.UTF8, MappingAction.Error));
         }
 
         [Test]
@@ -239,59 +238,53 @@ namespace XmlRpcLight.Test {
 
         //-------------------------------------------------------------------------/
         [Test]
-        [ExpectedException(typeof (XmlRpcMappingSerializeException))]
         public void Struct2_AllMissing_ErrorError() {
-            var xdoc = Utils.Serialize(
+            Assert.Throws< XmlRpcMappingSerializeException>(()=> Utils.Serialize(
                 "Struct2_AllMissing_ErrorError",
                 new Struct2(),
-                Encoding.UTF8, MappingAction.Error);
+                Encoding.UTF8, MappingAction.Error));
         }
 
         [Test]
-        [ExpectedException(typeof (XmlRpcMappingSerializeException))]
         public void Struct2_AllMissing_IgnoreError() {
-            var xdoc = Utils.Serialize(
+            Assert.Throws< XmlRpcMappingSerializeException>(()=> Utils.Serialize(
                 "Struct2_AllMissing_IgnoreError",
                 new Struct2(),
-                Encoding.UTF8, MappingAction.Ignore);
+                Encoding.UTF8, MappingAction.Ignore));
         }
 
         //-------------------------------------------------------------------------/
         [Test]
-        [ExpectedException(typeof (XmlRpcMappingSerializeException))]
         public void Struct3_AllMissing_ErrorDefaultError() {
-            var xdoc = Utils.Serialize(
+            Assert.Throws< XmlRpcMappingSerializeException>(()=> Utils.Serialize(
                 "Struct3_AllMissing_ErrorDefaultError",
                 new Struct3(),
-                Encoding.UTF8, MappingAction.Error);
+                Encoding.UTF8, MappingAction.Error));
         }
 
         [Test]
-        [ExpectedException(typeof (XmlRpcMappingSerializeException))]
         public void Struct3_AllMissing_IgnoreDefaultError() {
-            var xdoc = Utils.Serialize(
+            Assert.Throws< XmlRpcMappingSerializeException>(()=> Utils.Serialize(
                 "Struct3_AllMissing_IgnoreDefaultError",
                 new Struct3(),
-                Encoding.UTF8, MappingAction.Ignore);
+                Encoding.UTF8, MappingAction.Ignore));
         }
 
         //-------------------------------------------------------------------------/
         [Test]
-        [ExpectedException(typeof (XmlRpcMappingSerializeException))]
         public void Struct4_AllMissing_ErrorIgnoreError() {
-            var xdoc = Utils.Serialize(
+            Assert.Throws< XmlRpcMappingSerializeException>(()=> Utils.Serialize(
                 "Struct4_AllMissing_ErrorIgnoreError",
                 new Struct4(),
-                Encoding.UTF8, MappingAction.Error);
+                Encoding.UTF8, MappingAction.Error));
         }
 
         [Test]
-        [ExpectedException(typeof (XmlRpcMappingSerializeException))]
         public void Struct4_AllMissing_IgnoreIgnoreError() {
-            var xdoc = Utils.Serialize(
+            Assert.Throws< XmlRpcMappingSerializeException>(()=> Utils.Serialize(
                 "Struct4_AllMissing_IgnoreIgnoreError",
                 new Struct4(),
-                Encoding.UTF8, MappingAction.Ignore);
+                Encoding.UTF8, MappingAction.Ignore));
         }
 
         //-------------------------------------------------------------------------/

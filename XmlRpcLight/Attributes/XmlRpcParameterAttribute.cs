@@ -1,18 +1,21 @@
 using System;
-namespace XmlRpcLight.Attributes {
+namespace XmlRpcLight.Attributes
+{
     [AttributeUsage(AttributeTargets.Parameter)]
-    public class XmlRpcParameterAttribute : Attribute {
-        public XmlRpcParameterAttribute() {}
-        public XmlRpcParameterAttribute(string name) {
-            this.name = name;
+    public class XmlRpcParameterAttribute : Attribute
+    {
+        public XmlRpcParameterAttribute() { }
+        public XmlRpcParameterAttribute(string name)
+        {
+            Name = name;
         }
-        public string Name { get { return name; } }
-        public string Description { get { return description; } set { description = value; } }
-        public override string ToString() {
-            string value = "Description : " + description;
+        public string Name { get; }
+        public string Description { get; set; }
+        public override string ToString()
+        {
+            string value = "Description : " + Description;
             return value;
         }
-        private readonly string name = "";
-        private string description = "";
+
     }
 }

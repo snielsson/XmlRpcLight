@@ -1,20 +1,25 @@
 using System;
-namespace XmlRpcLight {
-    public class XmlRpcParameterInfo {
+namespace XmlRpcLight
+{
+    public class XmlRpcParameterInfo
+    {
         public string Doc { get; set; }
         public bool IsParams { get; set; }
-        public String Name {
+        public String Name
+        {
             get { return name; }
-            set {
+            set
+            {
                 name = value;
-                if (xmlRpcName == "")
-                    xmlRpcName = name;
+
+                if (string.IsNullOrEmpty(XmlRpcName))
+                    XmlRpcName = name;
             }
         }
-        public String XmlRpcName { get { return xmlRpcName; } set { xmlRpcName = value; } }
+        public string XmlRpcName { get; set; }
         public Type Type { get; set; }
         public string XmlRpcType { get; set; }
         private string name;
-        private string xmlRpcName;
+
     }
 }

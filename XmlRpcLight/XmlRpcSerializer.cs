@@ -132,7 +132,7 @@ namespace XmlRpcLight {
             var xdoc = new XmlDocument { PreserveWhitespace = true };
             try {
                 using (var xmlRdr = new XmlTextReader(stm)) {
-                    xmlRdr.ProhibitDtd = true;
+                    xmlRdr.DtdProcessing = DtdProcessing.Parse;
                     xdoc.Load(xmlRdr);
                 }
             }
@@ -152,7 +152,7 @@ namespace XmlRpcLight {
             xdoc.PreserveWhitespace = true;
             try {
                 using (var xmlRdr = new XmlTextReader(txtrdr)) {
-                    xmlRdr.ProhibitDtd = true;
+                    xmlRdr.DtdProcessing = DtdProcessing.Parse;
                     xdoc.Load(xmlRdr);
                 }
             }
@@ -341,7 +341,7 @@ namespace XmlRpcLight {
             try {
                 using (var xmlRdr = new XmlTextReader(stm)) {
 #if (!COMPACT_FRAMEWORK)
-                    xmlRdr.ProhibitDtd = true;
+                    xmlRdr.DtdProcessing = DtdProcessing.Parse;
 #endif
                     xdoc.Load(xmlRdr);
                 }
@@ -362,7 +362,7 @@ namespace XmlRpcLight {
             try {
                 using (var xmlRdr = new XmlTextReader(txtrdr)) {
 #if (!COMPACT_FRAMEWORK)
-                    xmlRdr.ProhibitDtd = true;
+                    xmlRdr.DtdProcessing = DtdProcessing.Parse;
 #endif
                     xdoc.Load(xmlRdr);
                 }
@@ -993,14 +993,14 @@ namespace XmlRpcLight {
                             valObj = ParseValue(vvvNode, fi.FieldType,
                                 parseStack, mappingAction);
                         }
-                        catch (XmlRpcInvalidXmlRpcException) {
+                        catch (XmlRpcTypeMismatchException) {
                             if (valueType != null && localAction == MappingAction.Error) {
                                 MappingAction memberAction = MemberMappingAction(valueType,
                                     name, MappingAction.Error);
                                 if (memberAction == MappingAction.Error)
                                     throw;
                             }
-                        }
+                        }         
                         finally {
                             parseStack.Pop();
                         }

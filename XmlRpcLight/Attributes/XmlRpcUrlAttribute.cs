@@ -1,15 +1,18 @@
 using System;
-namespace XmlRpcLight.Attributes {
+namespace XmlRpcLight.Attributes
+{
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
-    public class XmlRpcUrlAttribute : Attribute {
-        public XmlRpcUrlAttribute(string UriString) {
-            uri = UriString;
+    public class XmlRpcUrlAttribute : Attribute
+    {
+        public XmlRpcUrlAttribute(string UriString)
+        {
+            Uri = UriString;
         }
-        public string Uri { get { return uri; } }
-        public override string ToString() {
-            string value = "Uri : " + uri;
-            return value;
+        public string Uri { get; }
+        public override string ToString()
+        {
+            return "Uri : " + Uri;
         }
-        private readonly string uri;
+
     }
 }

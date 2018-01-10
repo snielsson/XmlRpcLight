@@ -3,79 +3,38 @@ using System.Reflection;
 namespace XmlRpcLight
 {
     public class XmlRpcMethodInfo : IComparable
-  {
-    public XmlRpcMethodInfo()
     {
-    }
 
-    public bool IsHidden
-    {
-      get { return isHidden; }
-      set { isHidden = value; }
-    }
+        public bool IsHidden { get; set; }
 
-    public String Doc
-    {
-      get { return doc; }
-      set { doc = value; }
-    }
+        public string Doc { get; set; } = "";
 
-    public MethodInfo MethodInfo
-    {
-      get { return mi; }
-      set { mi = value; }
-    }
 
-    public String MiName
-    {
-      get { return name; }
-      set { name = value; }
-    }
+        public MethodInfo MethodInfo { get; set; }
 
-    public XmlRpcParameterInfo[] Parameters
-    {
-      get { return paramInfos; }
-      set { paramInfos = value; }
-    }
+        public string MiName { get; set; } = "";
+      
+        public XmlRpcParameterInfo[] Parameters { get; set; }     
 
-    public Type ReturnType
-    {
-      get { return returnType; }
-      set { returnType = value; }
-    }
+        public Type ReturnType { get; set; }
 
-    public string ReturnXmlRpcType
-    {
-      get { return returnXmlRpcType; }
-      set { returnXmlRpcType = value; }
-    }
+        public string ReturnXmlRpcType { get; set; }
 
-    public String ReturnDoc
-    {
-      get { return returnDoc; }
-      set { returnDoc = value; }
-    }
 
-    public String XmlRpcName
-    {
-      get { return xmlRpcName; }
-      set { xmlRpcName = value; }
-    }
+        public string ReturnDoc { get; set; } = "";
 
-    public int CompareTo(object obj)
-    {
-      XmlRpcMethodInfo xmi = (XmlRpcMethodInfo)obj;
-      return this.xmlRpcName.CompareTo(xmi.xmlRpcName);
-    }
 
-    MethodInfo mi;
-    bool isHidden;
-    string doc="";
-    string name="";
-    string xmlRpcName="";
-    string returnDoc="";
-    Type returnType;
-    string returnXmlRpcType;
-    XmlRpcParameterInfo[] paramInfos;
-  }  
+        public string XmlRpcName { get; set; }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is XmlRpcMethodInfo xmi)
+            {
+                return this.XmlRpcName.CompareTo(xmi.XmlRpcName);
+            }
+            throw new ArgumentOutOfRangeException(nameof(obj), $"should be type {typeof(XmlRpcMethodInfo)}");
+        }
+
+
+    }
 }

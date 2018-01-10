@@ -13,10 +13,9 @@ namespace XmlRpcLight.Test {
         }
 
         [Test]
-        [ExpectedException(typeof (ArgumentException))]
         public void SetInvalidKey() {
             var xps = new XmlRpcStruct();
-            xps[1] = "abcdef";
+          Assert.Throws< ArgumentException>(()=>  xps[1] = "abcdef");
         }
 
         [Test]
@@ -28,11 +27,10 @@ namespace XmlRpcLight.Test {
         }
 
         [Test]
-        [ExpectedException(typeof (ArgumentException))]
         public void AddInvalidKey() {
-            var xps = new XmlRpcStruct {
+            Assert.Throws< ArgumentException>(()=> new XmlRpcStruct {
                 {1, "abcdef"}
-            };
+            });
         }
 
         [Test]
@@ -44,12 +42,11 @@ namespace XmlRpcLight.Test {
         }
 
         [Test]
-        [ExpectedException(typeof (ArgumentException))]
         public void DoubleAdd() {
-            var xps = new XmlRpcStruct {
+            Assert.Throws< ArgumentException>(()=> new XmlRpcStruct {
                 {"foo", "123456"},
                 {"foo", "abcdef"}
-            };
+            });
         }
 
         [Test]
@@ -63,21 +60,21 @@ namespace XmlRpcLight.Test {
             enumerator.MoveNext();
             Assert.AreEqual("1", enumerator.Key);
             Assert.AreEqual("a", enumerator.Value);
-            Assert.IsInstanceOfType(typeof (DictionaryEntry), enumerator.Current);
+            Assert.IsInstanceOf<DictionaryEntry>( enumerator.Current);
             var de = (DictionaryEntry) enumerator.Current;
             Assert.AreEqual("1", de.Key);
             Assert.AreEqual("a", de.Value);
             enumerator.MoveNext();
             Assert.AreEqual("3", enumerator.Key);
             Assert.AreEqual("c", enumerator.Value);
-            Assert.IsInstanceOfType(typeof (DictionaryEntry), enumerator.Current);
+            Assert.IsInstanceOf<DictionaryEntry>( enumerator.Current);
             de = (DictionaryEntry) enumerator.Current;
             Assert.AreEqual("3", de.Key);
             Assert.AreEqual("c", de.Value);
             enumerator.MoveNext();
             Assert.AreEqual("2", enumerator.Key);
             Assert.AreEqual("b", enumerator.Value);
-            Assert.IsInstanceOfType(typeof (DictionaryEntry), enumerator.Current);
+            Assert.IsInstanceOf<DictionaryEntry>( enumerator.Current);
             de = (DictionaryEntry) enumerator.Current;
             Assert.AreEqual("2", de.Key);
             Assert.AreEqual("b", de.Value);

@@ -5,3 +5,4 @@ packages
 *.suo
 *.nupkg
 *.DotSettings.User
+/.vs/XmlRpcLight/v15/Server/sqlite3
