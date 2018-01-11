@@ -3,7 +3,6 @@ namespace XmlRpcLight.DataTypes {
         private readonly int _value;
 
         public XmlRpcInt() {
-            _value = 0;
         }
 
         public XmlRpcInt(int val) {

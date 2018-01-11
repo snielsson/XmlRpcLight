@@ -6,13 +6,9 @@ namespace XmlRpcLight.Attributes
     {
         public XmlRpcMethodAttribute()
         {
-            StructParams = false;
-            IntrospectionMethod = false;
         }
         public XmlRpcMethodAttribute(string method)
         {
-            StructParams = false;
-            IntrospectionMethod = false;
             this.Method = method;
         }
         public string Method { get; }

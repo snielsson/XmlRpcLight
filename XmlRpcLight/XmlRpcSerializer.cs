@@ -132,7 +132,7 @@ namespace XmlRpcLight {
             var xdoc = new XmlDocument { PreserveWhitespace = true };
             try {
                 using (var xmlRdr = new XmlTextReader(stm)) {
-                    xmlRdr.DtdProcessing = DtdProcessing.Parse;
+                    xmlRdr.DtdProcessing = DtdProcessing.Prohibit;
                     xdoc.Load(xmlRdr);
                 }
             }
@@ -152,7 +152,7 @@ namespace XmlRpcLight {
             xdoc.PreserveWhitespace = true;
             try {
                 using (var xmlRdr = new XmlTextReader(txtrdr)) {
-                    xmlRdr.DtdProcessing = DtdProcessing.Parse;
+                    xmlRdr.DtdProcessing = DtdProcessing.Prohibit;
                     xdoc.Load(xmlRdr);
                 }
             }
@@ -341,7 +341,7 @@ namespace XmlRpcLight {
             try {
                 using (var xmlRdr = new XmlTextReader(stm)) {
 #if (!COMPACT_FRAMEWORK)
-                    xmlRdr.DtdProcessing = DtdProcessing.Parse;
+                    xmlRdr.DtdProcessing = DtdProcessing.Prohibit;
 #endif
                     xdoc.Load(xmlRdr);
                 }
@@ -362,7 +362,7 @@ namespace XmlRpcLight {
             try {
                 using (var xmlRdr = new XmlTextReader(txtrdr)) {
 #if (!COMPACT_FRAMEWORK)
-                    xmlRdr.DtdProcessing = DtdProcessing.Parse;
+                    xmlRdr.DtdProcessing = DtdProcessing.Prohibit;
 #endif
                     xdoc.Load(xmlRdr);
                 }
@@ -1160,7 +1160,7 @@ namespace XmlRpcLight {
                                                                + " contains member with more than one value element"
                                                                + " " + StackDump(parseStack));
                     }
-                    if (retObj.Contains(rpcName)) {
+                    if (retObj.ContainsKey(rpcName)) {
                         if (!IgnoreDuplicateMembers) {
                             throw new XmlRpcInvalidXmlRpcException(parseStack.ParseType
                                                                    + " contains struct value with duplicate member "
