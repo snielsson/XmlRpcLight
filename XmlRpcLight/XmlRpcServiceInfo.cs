@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using XmlRpcLight.Attributes;
 using XmlRpcLight.DataTypes;
@@ -44,8 +45,10 @@ namespace XmlRpcLight {
 
             foreach (MethodInfo mi in type.GetMethods())
             {
-                ArrayList mthds = new ArrayList();
-                mthds.Add(mi);
+                var mthds = new List<MethodInfo>
+                {
+                    mi
+                };
                 MethodInfo curMi = mi;
                 while (true)
                 {
@@ -73,14 +76,16 @@ namespace XmlRpcLight {
                     typeof(XmlRpcMethodAttribute));
             if (attr == null)
                 return;
-            XmlRpcMethodInfo mthdInfo = new XmlRpcMethodInfo();
-            mthdInfo.MethodInfo = mi;
-            mthdInfo.XmlRpcName = GetXmlRpcMethodName(mi);
-            mthdInfo.MiName = mi.Name;
-            mthdInfo.Doc = attr.Description;
-            mthdInfo.IsHidden = attr.IntrospectionMethod | attr.Hidden;
+            XmlRpcMethodInfo mthdInfo = new XmlRpcMethodInfo
+            {
+                MethodInfo = mi,
+                XmlRpcName = GetXmlRpcMethodName(mi),
+                MiName = mi.Name,
+                Doc = attr.Description,
+                IsHidden = attr.IntrospectionMethod | attr.Hidden
+            };
             // extract parameters information
-            ArrayList parmList = new ArrayList();
+            var parmList = new List<XmlRpcParameterInfo>();
             ParameterInfo[] parms = mi.GetParameters();
             foreach (ParameterInfo parm in parms)
             {
@@ -102,8 +107,8 @@ namespace XmlRpcLight {
                     typeof(ParamArrayAttribute));
                 parmList.Add(parmInfo);
             }
-            mthdInfo.Parameters = (XmlRpcParameterInfo[])
-                parmList.ToArray(typeof(XmlRpcParameterInfo));
+            mthdInfo.Parameters = 
+                parmList.ToArray();
             // extract return type information
             mthdInfo.ReturnType = mi.ReturnType;
             mthdInfo.ReturnXmlRpcType = GetXmlRpcTypeString(mi.ReturnType);
