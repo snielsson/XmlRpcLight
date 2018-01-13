@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -132,7 +133,7 @@ namespace XmlRpcLight {
             var xdoc = new XmlDocument { PreserveWhitespace = true };
             try {
                 using (var xmlRdr = new XmlTextReader(stm)) {
-                    xmlRdr.ProhibitDtd = true;
+                    xmlRdr.DtdProcessing = DtdProcessing.Prohibit;
                     xdoc.Load(xmlRdr);
                 }
             }
@@ -152,7 +153,7 @@ namespace XmlRpcLight {
             xdoc.PreserveWhitespace = true;
             try {
                 using (var xmlRdr = new XmlTextReader(txtrdr)) {
-                    xmlRdr.ProhibitDtd = true;
+                    xmlRdr.DtdProcessing = DtdProcessing.Prohibit;
                     xdoc.Load(xmlRdr);
                 }
             }
@@ -341,7 +342,7 @@ namespace XmlRpcLight {
             try {
                 using (var xmlRdr = new XmlTextReader(stm)) {
 #if (!COMPACT_FRAMEWORK)
-                    xmlRdr.ProhibitDtd = true;
+                    xmlRdr.DtdProcessing = DtdProcessing.Prohibit;
 #endif
                     xdoc.Load(xmlRdr);
                 }
@@ -362,7 +363,7 @@ namespace XmlRpcLight {
             try {
                 using (var xmlRdr = new XmlTextReader(txtrdr)) {
 #if (!COMPACT_FRAMEWORK)
-                    xmlRdr.ProhibitDtd = true;
+                    xmlRdr.DtdProcessing = DtdProcessing.Prohibit;
 #endif
                     xdoc.Load(xmlRdr);
                 }
@@ -422,9 +423,9 @@ namespace XmlRpcLight {
             return response;
         }
         public void Serialize(XmlTextWriter xtw, Object o, MappingAction mappingAction) {
-            Serialize(xtw, o, mappingAction, new ArrayList(16));
+            Serialize(xtw, o, mappingAction, new List<object>(16));
         }
-        public void Serialize(XmlTextWriter xtw, Object o, MappingAction mappingAction, ArrayList nestedObjs) {
+        public void Serialize(XmlTextWriter xtw, Object o, MappingAction mappingAction, IList<object> nestedObjs) {
             if (nestedObjs.Contains(o)) {
                 throw new XmlRpcUnsupportedTypeException(nestedObjs[0].GetType(),
                     "Cannot serialize recursive data structure");
@@ -590,7 +591,7 @@ namespace XmlRpcLight {
             int CurRank,
             int[] indices,
             MappingAction mappingAction,
-            ArrayList nestedObjs) {
+            IList<object> nestedObjs) {
             xtw.WriteStartElement("", "array", "");
             xtw.WriteStartElement("", "data", "");
             if (CurRank < (ary.Rank - 1)) {
@@ -811,7 +812,7 @@ namespace XmlRpcLight {
       int rank = commas.Length+1;
 #endif
             // elements will be stored sequentially as nested arrays are parsed
-            var elements = new ArrayList();
+            var elements = new List<object>();
             // create array to store length of each dimension - initialize to 
             // all zeroes so that when parsing we can determine if an array for 
             // that dimension has been parsed already
@@ -841,7 +842,7 @@ namespace XmlRpcLight {
         }
 
         private void ParseMultiDimElements(XmlNode node, int Rank, int CurRank,
-            Type elemType, ArrayList elements, int[] dimLengths,
+            Type elemType, IList<object> elements, int[] dimLengths,
             ParseStack parseStack, MappingAction mappingAction) {
             if (node.Name != "array") {
                 throw new XmlRpcTypeMismatchException(
@@ -993,14 +994,14 @@ namespace XmlRpcLight {
                             valObj = ParseValue(vvvNode, fi.FieldType,
                                 parseStack, mappingAction);
                         }
-                        catch (XmlRpcInvalidXmlRpcException) {
+                        catch (XmlRpcTypeMismatchException) {
                             if (valueType != null && localAction == MappingAction.Error) {
                                 MappingAction memberAction = MemberMappingAction(valueType,
                                     name, MappingAction.Error);
                                 if (memberAction == MappingAction.Error)
                                     throw;
                             }
-                        }
+                        }         
                         finally {
                             parseStack.Pop();
                         }
@@ -1160,7 +1161,7 @@ namespace XmlRpcLight {
                                                                + " contains member with more than one value element"
                                                                + " " + StackDump(parseStack));
                     }
-                    if (retObj.Contains(rpcName)) {
+                    if (retObj.ContainsKey(rpcName)) {
                         if (!IgnoreDuplicateMembers) {
                             throw new XmlRpcInvalidXmlRpcException(parseStack.ParseType
                                                                    + " contains struct value with duplicate member "
@@ -1555,12 +1556,12 @@ namespace XmlRpcLight {
         }
 
         private XmlNode[] SelectNodes(XmlNode node, string name) {
-            var list = new ArrayList();
+            var list = new List<XmlNode>();
             foreach (XmlNode selnode in node.ChildNodes) {
                 if (selnode.Name == name)
                     list.Add(selnode);
             }
-            return (XmlNode[]) list.ToArray(typeof (XmlNode));
+            return list.ToArray();
         }
 
         private XmlNode SelectValueNode(XmlNode valueNode) {

@@ -1,12 +1,15 @@
 using System;
-namespace XmlRpcLight.Attributes {
+namespace XmlRpcLight.Attributes
+{
     [AttributeUsage(AttributeTargets.ReturnValue)]
-    public class XmlRpcReturnValueAttribute : Attribute {
-        public string Description { get { return description; } set { description = value; } }
-        public override string ToString() {
-            string value = "Description : " + description;
+    public class XmlRpcReturnValueAttribute : Attribute
+    {
+        public string Description { get; set; } = "";
+        public override string ToString()
+        {
+            string value = "Description : " + Description;
             return value;
         }
-        private string description = "";
+
     }
 }

@@ -20,12 +20,12 @@ namespace XmlRpcLight {
             method = methodName;
             args = parameters;
         }
-        public String method = null;
-        public Object[] args = null;
-        public MethodInfo mi = null;
+        public String method;
+        public Object[] args;
+        public MethodInfo mi;
         public Guid proxyId;
         private static int _created;
         public int number = Interlocked.Increment(ref _created);
-        public String xmlRpcMethod = null;
+        public String xmlRpcMethod;
     }
 }

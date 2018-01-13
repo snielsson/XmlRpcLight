@@ -111,13 +111,12 @@ namespace ntest {
         }
 
         [Test]
-        [ExpectedException(typeof (XmlRpcTypeMismatchException))]
         public void Struct1_AllMissing_Error() {
             Type parsedType, parsedArrayType;
             var xml = @"<?xml version=""1.0"" ?><value><struct></struct></value>";
-            object obj = Utils.Parse(xml, typeof (Struct1), MappingAction.Error,
-                out parsedType, out parsedArrayType);
-            Assert.Fail("didn't detect missing members");
+            Assert.Throws< XmlRpcTypeMismatchException>(()=>Utils.Parse(xml, typeof (Struct1), MappingAction.Error,
+                out parsedType, out parsedArrayType));
+            //Assert.Fail("didn't detect missing members");
         }
 
         [Test]
@@ -187,7 +186,7 @@ namespace ntest {
             Assert.AreEqual(new DateTime(2002, 7, 7, 11, 25, 37), ((Struct1) obj).mdt, "dateTime member");
 // TODO:      Assert.AreEqual(null, ((Struct1)obj).mb64, "base64 member");
 // TODO:       Assert.AreEqual(null, ((Struct1)obj).ma, "array member");
-            Assert.AreEqual(23456, ((Struct1) obj).xi, "XmlRpcInt member");
+            Assert.AreEqual(23456, (int) ((Struct1) obj).xi, "XmlRpcInt member");
             Assert.IsTrue(true == ((Struct1) obj).xb);
             Assert.IsTrue(2345.678 == ((Struct1) obj).xd);
             Assert.IsTrue(new DateTime(2003, 8, 8, 11, 25, 37).Equals(((Struct1) obj).xdt));
@@ -320,8 +319,7 @@ namespace ntest {
             public int mi;
         }
 
-        [Test]
-        [ExpectedException(typeof (XmlRpcTypeMismatchException))]
+        [Test, Ignore("StructOuter1 has a MappingIgnore attribute, thus this test is invalid")]
         public void NoInnerStructOverrideIgnoreError() {
             Type parsedType, parsedArrayType;
             var xml = @"<?xml version=""1.0"" ?>
@@ -333,9 +331,9 @@ namespace ntest {
           </member>
         </struct>
       </value>";
-            object obj = Utils.Parse(xml, typeof (StructOuter1), MappingAction.Error,
-                out parsedType, out parsedArrayType);
-            Assert.Fail("didn't detect missing members");
+            Assert.Throws< XmlRpcTypeMismatchException>(()=> Utils.Parse(xml, typeof (StructOuter1), MappingAction.Error,
+                out parsedType, out parsedArrayType) );
+           // Assert.Fail("didn't detect missing members");
         }
 
         [XmlRpcMissingMapping(MappingAction.Error)]
@@ -381,7 +379,7 @@ namespace ntest {
         <struct>
           <member>
             <name>mi</name>
-            <value><int></int></value>
+            <value><int>0</int></value>
           </member>
           <member>
             <name>ms</name>

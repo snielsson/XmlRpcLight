@@ -1,32 +1,23 @@
 using System;
-namespace XmlRpcLight.Attributes {
+namespace XmlRpcLight.Attributes
+{
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
-    public class XmlRpcServiceAttribute : Attribute {
-        public bool AutoDocumentation { get { return autoDocumentation; } set { autoDocumentation = value; } }
-        public bool AutoDocVersion { get { return autoDocVersion; } set { autoDocVersion = value; } }
-        public string Description { get { return description; } set { description = value; } }
-        public int Indentation { get { return indentation; } set { indentation = value; } }
+    public class XmlRpcServiceAttribute : Attribute
+    {
+        public bool AutoDocumentation { get; set; } = true;
+        public bool AutoDocVersion { get; set; } = true;
+        public string Description { get; set; } = "";
+        public int Indentation { get; set; } = 2;
         public bool Introspection { get; set; }
-        public string Name { get { return name; } set { name = value; } }
-        public bool UseIndentation { get { return useIndentation; } set { useIndentation = value; } }
+        public string Name { get; set; } = "";
+        public bool UseIndentation { get; set; } = true;
         public bool UseIntTag { get; set; }
-        public bool UseStringTag { get { return useStringTag; } set { useStringTag = value; } }
+        public bool UseStringTag { get; set; } = true;
         public string XmlEncoding { get; set; }
-        public override string ToString() {
-            string value = "Description : " + description;
+        public override string ToString()
+        {
+            string value = "Description : " + Description;
             return value;
-        }
-        private string description = "";
-        private int indentation = 2;
-        private bool autoDocumentation = true;
-        private bool autoDocVersion = true;
-        private string name = "";
-        private bool useStringTag = true;
-        private bool useIndentation = true;
-        public XmlRpcServiceAttribute() {
-            XmlEncoding = null;
-            UseIntTag = false;
-            Introspection = false;
         }
     }
 }

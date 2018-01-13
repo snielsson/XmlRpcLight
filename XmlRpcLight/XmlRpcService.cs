@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using XmlRpcLight.Attributes;
-namespace XmlRpcLight {
+namespace XmlRpcLight
+{
     public abstract class XmlRpcService : MarshalByRefObject {
         [XmlRpcMethod("system.listMethods", IntrospectionMethod = true, Description = "Return an array of all available XML-RPC methods on this Service.")]
         public string[] System__List__Methods___() {
             XmlRpcServiceInfo svcInfo = XmlRpcServiceInfo.CreateServiceInfo(GetType());
-            var alist = new ArrayList();
+            var alist = new List<string>();
             foreach (XmlRpcMethodInfo mthdInfo in svcInfo.Methods) {
                 if (!mthdInfo.IsHidden) alist.Add(mthdInfo.XmlRpcName);
             }
-            return (String[]) alist.ToArray(typeof (string));
+            return alist.ToArray();
         }
 
         [XmlRpcMethod("system.methodSignature", IntrospectionMethod = true, Description = "Given the name of a method, return an array of legal signatures. Each signature is an array of strings. The first item of each signature is the return type, and any others items are parameter types.")]
@@ -22,18 +23,17 @@ namespace XmlRpcLight {
             XmlRpcMethodInfo mthdInfo = svcInfo.GetMethod(MethodName);
             if (mthdInfo == null) throw new XmlRpcFaultException(880, "Request for information on unsupported method");
             if (mthdInfo.IsHidden) throw new XmlRpcFaultException(881, "Information not available on this method");
-            var alist = new ArrayList {
+            var alist = new List<string> {
                 XmlRpcServiceInfo.GetXmlRpcTypeString(mthdInfo.ReturnType)
             };
             foreach (XmlRpcParameterInfo paramInfo in mthdInfo.Parameters) {
                 alist.Add(XmlRpcServiceInfo.GetXmlRpcTypeString(paramInfo.Type));
             }
-            var types = (string[]) alist.ToArray(typeof (string));
-            var retalist = new ArrayList {
+            var types =alist.ToArray();
+            var retalist = new [] {
                 types
             };
-            Array retarray = retalist.ToArray(typeof (string[]));
-            return retarray;
+            return retalist;
         }
 
         [XmlRpcMethod("system.methodHelp", IntrospectionMethod = true, Description = "Given the name of a method, return a help string.")]

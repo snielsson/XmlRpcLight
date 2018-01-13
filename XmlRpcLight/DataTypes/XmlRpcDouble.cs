@@ -3,7 +3,6 @@ namespace XmlRpcLight.DataTypes {
         private readonly double _value;
 
         public XmlRpcDouble() {
-            _value = 0;
         }
 
         public XmlRpcDouble(

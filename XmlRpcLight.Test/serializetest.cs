@@ -785,14 +785,13 @@ namespace XmlRpcLight.Test
 
         //---------------------- HashTable----------------------------------------// 
         [Test]
-        [ExpectedException(typeof (XmlRpcUnsupportedTypeException))]
         public void Hashtable() {
             var hashtable = new Hashtable();
             hashtable["mi"] = 34567;
             hashtable["ms"] = "another test string";
 
-            var xdoc = Utils.Serialize("SerializeTest.testXmlRpcStruct",
-                hashtable, Encoding.UTF8, MappingAction.Ignore);
+            Assert.Throws< XmlRpcUnsupportedTypeException>(()=> Utils.Serialize("SerializeTest.testXmlRpcStruct",
+                hashtable, Encoding.UTF8, MappingAction.Ignore));
         }
 
         //---------------------- XmlRpcInt -------------------------------------// 
@@ -870,7 +869,6 @@ namespace XmlRpcLight.Test
 
         //---------------------- null parameter ----------------------------------// 
         [Test]
-        [ExpectedException(typeof (XmlRpcNullParameterException))]
         public void NullParameter() {
             Stream stm = new MemoryStream();
             var req = new XmlRpcRequest();
@@ -879,7 +877,7 @@ namespace XmlRpcLight.Test
             };
             req.method = "Foo";
             var ser = new XmlRpcSerializer();
-            ser.SerializeRequest(stm, req);
+            Assert.Throws< XmlRpcNullParameterException>(()=>ser.SerializeRequest(stm, req));
         }
 
         //---------------------- formatting ----------------------------------// 
@@ -1201,7 +1199,6 @@ namespace XmlRpcLight.Test
         }
 
         [Test]
-        [ExpectedException(typeof (XmlRpcInvalidParametersException))]
         public void StructParamsWithParams() {
             Stream stm = new MemoryStream();
             var req = new XmlRpcRequest();
@@ -1217,11 +1214,10 @@ namespace XmlRpcLight.Test
             var ser = new XmlRpcSerializer();
             ser.Indentation = 2;
             ser.UseIntTag = true;
-            ser.SerializeRequest(stm, req);
+            Assert.Throws< XmlRpcInvalidParametersException>(()=> ser.SerializeRequest(stm, req));
         }
 
         [Test]
-        [ExpectedException(typeof (XmlRpcInvalidParametersException))]
         public void StructParamsTooManyParams() {
             Stream stm = new MemoryStream();
             var req = new XmlRpcRequest();
@@ -1236,7 +1232,7 @@ namespace XmlRpcLight.Test
             var ser = new XmlRpcSerializer();
             ser.Indentation = 2;
             ser.UseIntTag = true;
-            ser.SerializeRequest(stm, req);
+            Assert.Throws< XmlRpcInvalidParametersException>(()=>ser.SerializeRequest(stm, req));
         }
 
         [XmlRpcMethod("artist.getInfo", StructParams = true)]
